@@ -241,41 +241,70 @@ export async function renderLanding(container, params) {
                 <i data-lucide="shield-check" style="width:12px;height:12px;color:var(--sage-light);"></i>
                 <span>Safe &amp; Verified Groomers</span>
               </div>
-              <div class="how-van-wrapper">
-                <img src="/assets/pawfect_van.png" class="how-van-image" alt="Pawfect Premium Pet Grooming Van with Golden Retriever">
+              <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="how-van-wrapper" id="how-slideshow">
+                  <!-- Step 1: Book Service -->
+                  <div class="how-slide active" data-slide="1">
+                    <img src="/assets/book_service.png" class="how-slide-image" alt="Book Service — phone screen booking interface" loading="eager">
+                  </div>
+                  <!-- Step 2: Pet Pickup -->
+                  <div class="how-slide" data-slide="2">
+                    <img src="/assets/pawfect_van.png" class="how-slide-image" alt="Pet Pickup — Pawfect Premium Pet Grooming Van with Golden Retriever" loading="lazy">
+                  </div>
+                  <!-- Step 3: Salon Appointment -->
+                  <div class="how-slide" data-slide="3">
+                    <img src="/assets/gs_waiting.png" class="how-slide-image" alt="Salon Appointment — pet waiting in a salon reception lobby" loading="lazy">
+                  </div>
+                  <!-- Step 4: Grooming & Spa -->
+                  <div class="how-slide" data-slide="4">
+                    <img src="/assets/gs_spa.png" class="how-slide-image" alt="Grooming & Spa — groomer actively bathing a dog" loading="lazy">
+                  </div>
+                  <!-- Step 5: Safe Drop-Off -->
+                  <div class="how-slide" data-slide="5">
+                    <img src="/assets/safe_dropoff.png" class="how-slide-image" alt="Safe Drop-Off — happy groomed pet returned to doorstep" loading="lazy">
+                  </div>
+                </div>
+                <!-- Slideshow Dot Indicators -->
+                <div class="how-slideshow-dots" id="how-slideshow-dots">
+                  <button class="how-dot active" data-dot="1" aria-label="Go to Step 1"></button>
+                  <button class="how-dot" data-dot="2" aria-label="Go to Step 2"></button>
+                  <button class="how-dot" data-dot="3" aria-label="Go to Step 3"></button>
+                  <button class="how-dot" data-dot="4" aria-label="Go to Step 4"></button>
+                  <button class="how-dot" data-dot="5" aria-label="Go to Step 5"></button>
+                </div>
               </div>
             </div>
             
-            <div class="how-right-timeline">
-              <div class="timeline-step">
+            <div class="how-right-timeline" id="how-timeline">
+              <div class="timeline-step active" data-step="1">
                 <div class="timeline-step-icon"><i data-lucide="calendar"></i></div>
                 <div class="timeline-step-content">
                   <h4 class="timeline-step-title">1. Book Service</h4>
                   <p class="timeline-step-desc">Pick date, time, and service tier in seconds.</p>
                 </div>
               </div>
-              <div class="timeline-step">
+              <div class="timeline-step" data-step="2">
                 <div class="timeline-step-icon"><i data-lucide="truck"></i></div>
                 <div class="timeline-step-content">
                   <h4 class="timeline-step-title">2. Pet Pickup</h4>
                   <p class="timeline-step-desc">Our Pawfect van collects your companion safely.</p>
                 </div>
               </div>
-              <div class="timeline-step">
+              <div class="timeline-step" data-step="3">
                 <div class="timeline-step-icon"><i data-lucide="store"></i></div>
                 <div class="timeline-step-content">
                   <h4 class="timeline-step-title">3. Salon Appointment</h4>
                   <p class="timeline-step-desc">Priority VIP queue at our certified Ahmedabad salon.</p>
                 </div>
               </div>
-              <div class="timeline-step">
+              <div class="timeline-step" data-step="4">
                 <div class="timeline-step-icon"><i data-lucide="paw-print"></i></div>
                 <div class="timeline-step-content">
                   <h4 class="timeline-step-title">4. Grooming &amp; Spa</h4>
                   <p class="timeline-step-desc">Pampering with premium organic shampoo &amp; trim styles.</p>
                 </div>
               </div>
-              <div class="timeline-step">
+              <div class="timeline-step" data-step="5">
                 <div class="timeline-step-icon"><i data-lucide="home"></i></div>
                 <div class="timeline-step-content">
                   <h4 class="timeline-step-title">5. Safe Drop-Off</h4>
@@ -428,6 +457,124 @@ export async function renderLanding(container, params) {
     document.querySelectorAll('[data-count]').forEach(el => {
       ScrollReveal.animateCounter(el, parseFloat(el.dataset.count), 1800);
     });
+
+    // ============================================
+    // DYNAMIC SYNCED SLIDESHOW
+    // ============================================
+    const slideshow = container.querySelector('#how-slideshow');
+    const timeline = container.querySelector('#how-timeline');
+    const dotsContainer = container.querySelector('#how-slideshow-dots');
+    
+    if (slideshow && timeline && dotsContainer) {
+      const slides = slideshow.querySelectorAll('.how-slide');
+      const steps = timeline.querySelectorAll('.timeline-step');
+      const dots = dotsContainer.querySelectorAll('.how-dot');
+      
+      let currentStep = 1;
+      const totalSteps = 5;
+      let autoplayTimer = null;
+      let pauseResumeTimer = null;
+      
+      function showStep(stepIndex) {
+        currentStep = stepIndex;
+        
+        // Update Slides
+        slides.forEach(slide => {
+          const slideNum = parseInt(slide.dataset.slide);
+          if (slideNum === stepIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+        
+        // Update Timeline Steps
+        steps.forEach(step => {
+          const stepNum = parseInt(step.dataset.step);
+          if (stepNum === stepIndex) {
+            step.classList.add('active');
+            step.classList.remove('dimmed');
+          } else {
+            step.classList.remove('active');
+            step.classList.add('dimmed');
+          }
+        });
+        
+        // Update Dots
+        dots.forEach(dot => {
+          const dotNum = parseInt(dot.dataset.dot);
+          if (dotNum === stepIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+      
+      function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(() => {
+          let nextStep = currentStep + 1;
+          if (nextStep > totalSteps) {
+            nextStep = 1;
+          }
+          showStep(nextStep);
+        }, 3500); // 3.5 seconds per slide
+      }
+      
+      function stopAutoplay() {
+        if (autoplayTimer) {
+          clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      }
+      
+      function handleManualInteraction(stepIndex) {
+        // Stop autoplay and show selected step
+        stopAutoplay();
+        showStep(stepIndex);
+        
+        // Clear previous pause-resume timeout
+        if (pauseResumeTimer) {
+          clearTimeout(pauseResumeTimer);
+        }
+        
+        // Resume autoplay after 5 seconds of inactivity
+        pauseResumeTimer = setTimeout(() => {
+          startAutoplay();
+        }, 5000);
+      }
+      
+      // Attach click events to Timeline Steps
+      steps.forEach(step => {
+        step.addEventListener('click', () => {
+          const stepNum = parseInt(step.dataset.step);
+          handleManualInteraction(stepNum);
+        });
+      });
+      
+      // Attach click events to Dot Indicators
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const dotNum = parseInt(dot.dataset.dot);
+          handleManualInteraction(dotNum);
+        });
+      });
+      
+      // Initialize active states (Start at step 1)
+      showStep(1);
+      startAutoplay();
+      
+      // Cleanup function to prevent interval leaks on page transitions
+      const onRouteChanged = () => {
+        stopAutoplay();
+        if (pauseResumeTimer) clearTimeout(pauseResumeTimer);
+        window.removeEventListener('route-changed', onRouteChanged);
+        window.removeEventListener('popstate', onRouteChanged);
+      };
+      window.addEventListener('route-changed', onRouteChanged);
+      window.addEventListener('popstate', onRouteChanged);
+    }
 
     // ============================================
     // PREMIUM Before/After Slider

@@ -1904,17 +1904,70 @@
   position: relative;
   width: 100%;
   max-width: 440px;
+  aspect-ratio: 1 / 1;
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   animation: floatVan 6s ease-in-out infinite;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 29, 54, 0.4);
 }
 
-.how-van-image {
+.how-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.how-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.how-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+}
+
+.how-slideshow-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  z-index: 10;
+  position: relative;
+}
+
+.how-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  border: none;
+  padding: 0;
+}
+
+.how-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.how-dot.active {
+  background: var(--coral);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(228, 125, 93, 0.6);
 }
 
 @keyframes floatVan {
@@ -2030,6 +2083,40 @@
   border-color: var(--coral);
   color: #FFFFFF;
   box-shadow: 0 0 15px rgba(228, 125, 93, 0.5);
+}
+
+/* Active and Dimmed states */
+.timeline-step {
+  cursor: pointer;
+}
+
+.timeline-step.dimmed {
+  opacity: 0.45;
+}
+
+.timeline-step.dimmed:hover {
+  opacity: 0.85;
+}
+
+.timeline-step.active {
+  transform: translateX(6px);
+  opacity: 1;
+}
+
+.timeline-step.active .timeline-step-icon {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(228, 125, 93, 0.6);
+  transform: scale(1.1);
+}
+
+.timeline-step.active .timeline-step-title {
+  color: var(--coral-light);
+}
+
+.timeline-step.active .timeline-step-desc {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* Responsiveness */
