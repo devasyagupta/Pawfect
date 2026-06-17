@@ -2581,8 +2581,18 @@
 }
 
 .dm-stat-icon {
-  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
   margin-bottom: 6px;
+  color: var(--coral);
+}
+
+.dm-stat-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
 }
 
 .dm-stat-val {

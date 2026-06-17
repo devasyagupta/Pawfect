@@ -151,7 +151,7 @@ function renderSalonCards(salons) {
           <!-- Top badges -->
           <div class="scp-badges-top">
             ${isVerified ? '<span class="scp-badge scp-badge-verified"><i data-lucide="shield-check" style="width:10px;height:10px;"></i> Verified</span>' : ''}
-            ${isHomeService ? '<span class="scp-badge scp-badge-home">🚐 Home</span>' : ''}
+            ${isHomeService ? '<span class="scp-badge scp-badge-home"><i data-lucide="home" style="width:10px;height:10px;"></i> Home</span>' : ''}
           </div>
 
           <!-- Save button -->
@@ -186,7 +186,7 @@ function renderSalonCards(salons) {
           <!-- Service tags -->
           <div class="scp-tags">
             ${serviceTags.map(t => `<span class="scp-tag">${t}</span>`).join('')}
-            ${hasParking ? '<span class="scp-tag scp-tag-muted">🅿️ Parking</span>' : ''}
+            ${hasParking ? '<span class="scp-tag scp-tag-muted" style="display:inline-flex;align-items:center;gap:4px;"><i data-lucide="square-parking" style="width:10px;height:10px;"></i> Parking</span>' : ''}
           </div>
 
           <!-- Popular package -->
@@ -219,22 +219,22 @@ export async function renderDiscover(container, params) {
           <!-- Hero stat cards -->
           <div class="dm-hero-stats">
             <div class="dm-stat-card">
-              <div class="dm-stat-icon">🏆</div>
+              <div class="dm-stat-icon"><i data-lucide="shield-check"></i></div>
               <div class="dm-stat-val">25</div>
               <div class="dm-stat-label">Verified Salons</div>
             </div>
             <div class="dm-stat-card">
-              <div class="dm-stat-icon">⭐</div>
+              <div class="dm-stat-icon"><i data-lucide="star"></i></div>
               <div class="dm-stat-val">4.8+</div>
               <div class="dm-stat-label">Average Rating</div>
             </div>
             <div class="dm-stat-card">
-              <div class="dm-stat-icon">💰</div>
+              <div class="dm-stat-icon"><i data-lucide="indian-rupee"></i></div>
               <div class="dm-stat-val">₹399</div>
               <div class="dm-stat-label">Starting From</div>
             </div>
             <div class="dm-stat-card">
-              <div class="dm-stat-icon">🚐</div>
+              <div class="dm-stat-icon"><i data-lucide="home"></i></div>
               <div class="dm-stat-val">8+</div>
               <div class="dm-stat-label">Home Service</div>
             </div>
@@ -316,7 +316,7 @@ export async function renderDiscover(container, params) {
             <!-- Amenities -->
             <div class="dm-filter-group">
               <h4 class="dm-filter-title">Amenities</h4>
-              <label class="dm-checkbox"><input type="checkbox" id="filter-parking"><span>🅿️ Valet Parking</span></label>
+              <label class="dm-checkbox"><input type="checkbox" id="filter-parking"><span style="display:inline-flex;align-items:center;gap:6px;"><i data-lucide="square-parking" style="width:13px;height:13px;color:var(--text-tertiary);"></i> Valet Parking</span></label>
             </div>
 
             <!-- Verified toggle -->
@@ -341,7 +341,7 @@ export async function renderDiscover(container, params) {
                 <span class="dm-qs-sep">·</span>
                 <span class="dm-qs-item"><i data-lucide="shield-check" style="width:11px;height:11px;color:var(--sage-light);"></i> <strong id="qs-verified">25</strong> Verified</span>
                 <span class="dm-qs-sep">·</span>
-                <span class="dm-qs-item">🚐 <strong id="qs-home">8</strong> Home Service</span>
+                <span class="dm-qs-item"><i data-lucide="home" style="width:11px;height:11px;color:var(--coral);"></i> <strong id="qs-home">8</strong> Home Service</span>
               </div>
 
               <div class="dm-sort-row">
