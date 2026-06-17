@@ -143,7 +143,7 @@ function renderSalonCards(salons) {
     ).join('');
 
     return `
-      <div class="salon-card-premium" data-salon-id="${salon.id}" onclick="window.location.href='/salon/${salon.id}'" role="button" tabindex="0" aria-label="View ${salon.name}">
+      <a href="/salon/${salon.id}" class="salon-card-premium" data-link data-salon-id="${salon.id}" role="button" tabindex="0" aria-label="View ${salon.name}">
         <div class="scp-image-wrap">
           <img src="${img}" alt="${salon.name} grooming salon" loading="lazy" onerror="this.src='/assets/salon_109.png'">
           <div class="scp-image-overlay"></div>
@@ -155,7 +155,7 @@ function renderSalonCards(salons) {
           </div>
 
           <!-- Save button -->
-          <button class="salon-card-fav" onclick="event.stopPropagation();this.classList.toggle('liked');" aria-label="Save salon">
+          <button class="salon-card-fav" onclick="event.preventDefault();event.stopPropagation();this.classList.toggle('liked');" aria-label="Save salon">
             <i data-lucide="heart" style="width:15px;height:15px;"></i>
           </button>
 
@@ -195,7 +195,7 @@ function renderSalonCards(salons) {
             <span>${salon.popular_package || 'Full Grooming Package'}</span>
           </div>
         </div>
-      </div>
+      </a>
     `;
   }).join('');
 }

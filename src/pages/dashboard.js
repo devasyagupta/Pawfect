@@ -170,7 +170,7 @@ export async function renderDashboard(container, params) {
   // ── Favorites widget content ──
   const favoritesContent = favorites.length
     ? favorites.slice(0, 3).map(fav => `
-        <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);background:var(--bg-hover);border-radius:var(--radius-xl);cursor:pointer;" onclick="window.location.href='/salon/${fav.id}'">
+        <a href="/salon/${fav.id}" style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);background:var(--bg-hover);border-radius:var(--radius-xl);cursor:pointer;text-decoration:none;color:inherit;" data-link>
           <div style="width:44px;height:44px;border-radius:var(--radius-xl);background:var(--bg-secondary);overflow:hidden;flex-shrink:0;">
             <img src="${fav.image || '/assets/salon_109.png'}" alt="${fav.name}" style="width:100%;height:100%;object-fit:cover;">
           </div>
@@ -179,7 +179,7 @@ export async function renderDashboard(container, params) {
             <span style="font-size:var(--text-xs);color:var(--text-tertiary);">⭐ ${fav.rating || '4.8'} · ${fav.locality || 'Ahmedabad'}</span>
           </div>
           <i data-lucide="heart" style="color:var(--coral);flex-shrink:0;width:15px;height:15px;"></i>
-        </div>
+        </a>
       `).join('')
     : `
       <div class="ds-empty-state empty-favourite-salons" style="border: 1.5px dashed rgba(228, 125, 93, 0.25); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-4); background: rgba(228, 125, 93, 0.02); text-align: center; width: 100%;">

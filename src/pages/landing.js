@@ -151,25 +151,25 @@ export async function renderLanding(container, params) {
       <!-- Search Experience Section -->
       <section class="search-header-section container reveal reveal-delay-3">
         <div class="search-container-airbnb">
-          <div class="search-item" onclick="window.location.href='/discover'">
-            <label>Location</label>
-            <input type="text" placeholder="Where are you?" value="Satellite, Ahmedabad" readonly>
-          </div>
-          <div class="search-item" onclick="window.location.href='/discover'">
-            <label>Pet Type</label>
-            <select disabled style="opacity:1;">
+          <a href="/discover" class="search-item" data-link>
+            <label style="cursor: pointer;">Location</label>
+            <input type="text" placeholder="Where are you?" value="Satellite, Ahmedabad" readonly style="cursor: pointer;">
+          </a>
+          <a href="/discover" class="search-item" data-link>
+            <label style="cursor: pointer;">Pet Type</label>
+            <select disabled style="opacity:1; cursor: pointer;">
               <option>Dog (All Breeds)</option>
               <option>Cat</option>
             </select>
-          </div>
-          <div class="search-item" onclick="window.location.href='/discover'">
-            <label>Service</label>
-            <input type="text" placeholder="What service?" value="Full Styling &amp; Spa" readonly>
-          </div>
-          <div class="search-item" onclick="window.location.href='/discover'">
-            <label>Date</label>
-            <input type="text" placeholder="Pick Date" value="Anytime / Today" readonly>
-          </div>
+          </a>
+          <a href="/discover" class="search-item" data-link>
+            <label style="cursor: pointer;">Service</label>
+            <input type="text" placeholder="What service?" value="Full Styling &amp; Spa" readonly style="cursor: pointer;">
+          </a>
+          <a href="/discover" class="search-item" data-link>
+            <label style="cursor: pointer;">Date</label>
+            <input type="text" placeholder="Pick Date" value="Anytime / Today" readonly style="cursor: pointer;">
+          </a>
           <a href="/discover" class="search-btn-airbnb" data-link>
             <i data-lucide="search" style="width:20px;height:20px;"></i>
           </a>
@@ -383,11 +383,11 @@ export async function renderLanding(container, params) {
           
           <div class="salons-grid stagger-children">
             ${FEATURED_SALONS.map(s => `
-            <div class="salon-card" onclick="window.location.href='/salon/${s.id}'">
+            <a href="/salon/${s.id}" class="salon-card" data-link>
               <div class="salon-card-image">
                 <img src="${s.img}" alt="${s.name} grooming salon interior" loading="lazy" onerror="this.src='/assets/salon_109.png'">
                 <span class="salon-card-badge">${s.badge}</span>
-                <button class="salon-card-fav" onclick="event.stopPropagation();this.classList.toggle('liked');" aria-label="Save">
+                <button class="salon-card-fav" onclick="event.preventDefault();event.stopPropagation();this.classList.toggle('liked');" aria-label="Save">
                   <i data-lucide="heart" style="width:14px;height:14px;"></i>
                 </button>
               </div>
@@ -403,7 +403,7 @@ export async function renderLanding(container, params) {
                 <span class="salon-card-services">${s.services}</span>
                 <span class="salon-card-price">Starts at <strong>${s.price}</strong></span>
               </div>
-            </div>
+            </a>
             `).join('')}
           </div>
         </div>

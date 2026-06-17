@@ -269,7 +269,7 @@ const ARTICLE_CONTENT = {
 // ── Helpers ────────────────────────────────────────────────────────
 function renderBlogCard(post, featured = false) {
   return `
-    <article class="blog-card ${featured ? 'blog-card-featured' : ''}" onclick="window.location.href='/blog/${post.id}'" role="button" tabindex="0" aria-label="Read: ${post.title}">
+    <a href="/blog/${post.id}" class="blog-card ${featured ? 'blog-card-featured' : ''}" data-link role="button" tabindex="0" aria-label="Read: ${post.title}">
       <div class="blog-card-image-wrap">
         <img src="${post.image}" alt="${post.title}" loading="lazy" onerror="this.src='/assets/salon_109.png'">
         <span class="blog-card-category" style="--cat-color:${post.categoryColor};">${post.category}</span>
@@ -290,7 +290,7 @@ function renderBlogCard(post, featured = false) {
           <span class="blog-read-more">Read →</span>
         </div>
       </div>
-    </article>
+    </a>
   `;
 }
 
@@ -371,7 +371,7 @@ function renderArticlePage(container, postId) {
               <div class="blog-sidebar-widget">
                 <h4 class="blog-sidebar-title">Related Articles</h4>
                 ${relatedPosts.map(rp => `
-                  <div class="blog-sidebar-item" onclick="window.location.href='/blog/${rp.id}'" role="button">
+                  <a href="/blog/${rp.id}" class="blog-sidebar-item" data-link>
                     <div class="blog-sidebar-img">
                       <img src="${rp.image}" alt="${rp.title}" loading="lazy" onerror="this.src='/assets/salon_109.png'">
                     </div>
@@ -380,7 +380,7 @@ function renderArticlePage(container, postId) {
                       <div style="font-size:var(--text-sm);font-weight:var(--weight-semibold);line-height:1.35;color:var(--text-primary);">${rp.title}</div>
                       <div style="font-size:11px;color:var(--text-tertiary);margin-top:4px;">${rp.readTime}</div>
                     </div>
-                  </div>
+                  </a>
                 `).join('')}
               </div>
             ` : ''}
