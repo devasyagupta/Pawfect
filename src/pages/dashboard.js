@@ -172,7 +172,7 @@ export async function renderDashboard(container, params) {
     ? favorites.slice(0, 3).map(fav => `
         <a href="/salon/${fav.id}" style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3);background:var(--bg-hover);border-radius:var(--radius-xl);cursor:pointer;text-decoration:none;color:inherit;" data-link>
           <div style="width:44px;height:44px;border-radius:var(--radius-xl);background:var(--bg-secondary);overflow:hidden;flex-shrink:0;">
-            <img src="${fav.image || '/assets/salon_109.png'}" alt="${fav.name}" style="width:100%;height:100%;object-fit:cover;">
+            <img src="${fav.image || '/assets/salon_109.png'}" alt="${fav.name}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
           </div>
           <div style="flex:1;min-width:0;">
             <h5 style="font-weight:var(--weight-bold);font-size:var(--text-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${fav.name}</h5>

@@ -15,6 +15,8 @@ import { renderLogin } from './pages/login.js';
 import { renderSignup } from './pages/signup.js';
 import { renderBlog } from './pages/blog.js';
 import { auth, showToast } from './utils/auth.js';
+import { initChatbot } from './chatbot/avatar-chatbot.js';
+import { initScrollAnimations, killScrollAnimations } from './utils/gsap-animations.js';
 
 
 
@@ -130,6 +132,9 @@ function updateAuthUI() {
 router.init();
 updateAuthUI();
 
+// Initialize floating 3D chatbot widget
+initChatbot();
+
 // Listen to auth events
 window.addEventListener('auth-state-changed', () => {
   updateAuthUI();
@@ -228,14 +233,18 @@ if (window.lucide) {
 // Re-init icons after page changes (also re-init footer icons)
 window.addEventListener('route-changed', () => {
   setTimeout(() => {
-    if (window.lucide) {
-      lucide.createIcons();
-    }
+    if (window.lucide) lucide.createIcons();
     ScrollReveal.init();
     updateActiveNav();
     updateAuthUI();
-  }, 50);
+    // Kill previous GSAP context and reinitialise for new page
+    killScrollAnimations();
+    initScrollAnimations();
+  }, 80);
 });
+
+// Fire GSAP on initial page load (after router renders first route)
+setTimeout(initScrollAnimations, 120);
 
 // Ripple effect on buttons
 document.addEventListener('mousedown', (e) => {

@@ -121,12 +121,38 @@ export async function renderLanding(container, params) {
               <div style="font-size:11px;font-weight:700;margin-top:6px;color:var(--text-primary);">Grooming</div>
             </div>
 
-            <!-- Product Card -->
-            <div class="floating-card floating-card-2 float-medium wiggle-hover" style="flex-direction:column;padding:14px 16px;max-width:180px;">
-              <img src="/assets/dog_food_product.png" alt="Premium Dog Food" style="width:100%;height:80px;object-fit:cover;border-radius:10px;margin-bottom:8px;">
-              <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-primary);">PREMIUM | 5KG</div>
-              <div style="font-size:10px;color:var(--text-secondary);margin-top:2px;">Premium Grain-Free Dog Food</div>
-              <a href="/discover" class="btn btn-outline" style="margin-top:8px;padding:4px 12px;font-size:10px;" data-link>Buy Now</a>
+            <!-- Cat Polaroid Collage Card -->
+            <div class="floating-card floating-card-2 hero-cat-polaroid float-medium"
+                 style="flex-direction:column;padding:0;background:transparent;border:none;box-shadow:none;overflow:visible;">
+              <div style="
+                background:#fff;
+                border-radius:4px;
+                padding:10px 10px 10px 10px;
+                box-shadow:
+                  0 16px 48px rgba(27,42,74,0.22),
+                  0 4px 14px rgba(27,42,74,0.12),
+                  inset 0 1px 0 rgba(255,255,255,0.9);
+                transform: rotate(3deg);
+                transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+                width: 230px;
+                cursor: default;
+              "
+              onmouseenter="this.style.transform='rotate(1deg) scale(1.04)';this.style.boxShadow='0 24px 60px rgba(27,42,74,0.26),0 6px 18px rgba(27,42,74,0.14),inset 0 1px 0 rgba(255,255,255,0.9)'"
+              onmouseleave="this.style.transform='rotate(3deg)';this.style.boxShadow='0 16px 48px rgba(27,42,74,0.22),0 4px 14px rgba(27,42,74,0.12),inset 0 1px 0 rgba(255,255,255,0.9)'"
+              >
+                <img
+                  src="/assets/hero_cat_studio.png"
+                  alt="Cat grooming at Pawfect"
+                  style="
+                    width:100%;
+                    height:190px;
+                    object-fit:cover;
+                    object-position:center 15%;
+                    border-radius:2px;
+                    display:block;
+                  "
+                >
+              </div>
             </div>
 
             <!-- Testimonial Card -->
@@ -148,84 +174,86 @@ export async function renderLanding(container, params) {
         </div>
       </section>
 
-      <!-- Search Experience Section -->
-      <section class="search-header-section container reveal reveal-delay-3">
-        <div class="search-container-airbnb">
-          <a href="/discover" class="search-item" data-link>
-            <label style="cursor: pointer;">Location</label>
-            <input type="text" placeholder="Where are you?" value="Satellite, Ahmedabad" readonly style="cursor: pointer;">
-          </a>
-          <a href="/discover" class="search-item" data-link>
-            <label style="cursor: pointer;">Pet Type</label>
-            <select disabled style="opacity:1; cursor: pointer;">
-              <option>Dog (All Breeds)</option>
-              <option>Cat</option>
-            </select>
-          </a>
-          <a href="/discover" class="search-item" data-link>
-            <label style="cursor: pointer;">Service</label>
-            <input type="text" placeholder="What service?" value="Full Styling &amp; Spa" readonly style="cursor: pointer;">
-          </a>
-          <a href="/discover" class="search-item" data-link>
-            <label style="cursor: pointer;">Date</label>
-            <input type="text" placeholder="Pick Date" value="Anytime / Today" readonly style="cursor: pointer;">
-          </a>
-          <a href="/discover" class="search-btn-airbnb" data-link>
-            <i data-lucide="search" style="width:20px;height:20px;"></i>
-          </a>
-        </div>
-      </section>
-
-      <!-- Stats Section -->
-      <section class="stats-section reveal" style="background: var(--bg-secondary); border-top: 1px solid var(--border-primary); border-bottom: 1px solid var(--border-primary); padding: var(--space-12) 0; margin: var(--space-12) 0; width: 100%; max-width: none; position: relative; z-index: 10;">
+      <!-- Why Choose Pawfect Section -->
+      <section class="why-choose-section reveal">
         <div class="container">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-decor-bubble">🐾</div>
-              <div class="stat-icon-wrapper"><i data-lucide="paw-print"></i></div>
+          <div class="section-header" style="text-align:center;margin-bottom:0;">
+            <h2 class="section-title section-title-animate">Why Choose Pawfect?</h2>
+            <p class="section-subtitle section-subtitle-animate" style="max-width:520px;margin:10px auto 0;">
+              Premium pet grooming made simple, safe and trusted across Ahmedabad.
+            </p>
+          </div>
+          <div class="why-choose-grid">
+
+            <!-- Card 1: Certified Groomers -->
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <polyline points="9 12 11 14 15 10"/>
+                </svg>
+              </div>
               <div>
-                <div class="stat-number" data-count="50000" data-suffix="+">0</div>
-                <div class="stat-label">Pets Groomed</div>
+                <h3 class="why-card-title">Certified Groomers</h3>
+                <p class="why-card-desc">Every partner salon is professionally verified and experienced before joining our platform.</p>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-decor-bubble">💈</div>
-              <div class="stat-icon-wrapper"><i data-lucide="store"></i></div>
+
+            <!-- Card 2: Verified Reviews -->
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+              </div>
               <div>
-                <div class="stat-number" data-count="25" data-suffix="+">0</div>
-                <div class="stat-label">Ahmedabad Salons</div>
+                <h3 class="why-card-title">Verified Reviews</h3>
+                <p class="why-card-desc">Only genuine customer reviews from real appointments — no fake ratings, ever.</p>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-decor-bubble">⭐</div>
-              <div class="stat-icon-wrapper"><i data-lucide="star"></i></div>
+
+            <!-- Card 3: Doorstep Services -->
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
               <div>
-                <div class="stat-number" data-count="4.8" data-suffix="/5">0</div>
-                <div class="stat-label">Average Rating</div>
+                <h3 class="why-card-title">Doorstep Services</h3>
+                <p class="why-card-desc">Book trusted home grooming for maximum convenience — we come to you.</p>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-decor-bubble">📍</div>
-              <div class="stat-icon-wrapper"><i data-lucide="map-pin"></i></div>
+
+            <!-- Card 4: Premium Care -->
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
               <div>
-                <div class="stat-number" data-count="10" data-suffix="+">0</div>
-                <div class="stat-label">Areas Covered</div>
+                <h3 class="why-card-title">Premium Care</h3>
+                <p class="why-card-desc">Luxury grooming products and gentle techniques designed for your pet's comfort.</p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
-  </div>
-        </div>
-      </section>
+
+
+
 
       <!-- How Pawfect Works Section -->
+
       <section class="how-it-works-section reveal">
         <div class="container">
           <div class="how-it-works-grid">
             <div class="how-left">
-              <span class="section-label">🐾 Doorstep Grooming Experience</span>
-              <h2 class="section-title">Luxury Grooming,<br>Picked Up &amp; Delivered</h2>
+              <h2 class="section-title" style="margin-bottom:8px;">Luxury Grooming,<br>Picked Up &amp; Delivered</h2>
               <p class="supporting-text">
                 Busy schedule? Let Pawfect handle everything. Book a service, we'll safely pick up your pet, provide professional grooming at a certified Ahmedabad salon, and bring them back happy and pampered.
               </p>
@@ -320,9 +348,8 @@ export async function renderLanding(container, params) {
       <section class="transformations-section" style="background: var(--bg-accent-tint); border-top: 1px solid var(--border-primary); border-bottom: 1px solid var(--border-primary); padding: var(--section-space) 0; margin: var(--section-space) 0 0 0; width: 100%; max-width: none; position: relative;">
         <div class="container">
           <div class="section-header" style="margin-bottom:var(--space-8); text-align: center;">
-            <span class="section-label">✨ Before &amp; After</span>
             <h2 class="section-title">Pet Transformations</h2>
-            <p class="section-subtitle">Real transformations from Ahmedabad pet parents. Professional grooming, spa treatments and breed-specific styling.</p>
+            <p class="section-subtitle" style="margin-top:10px;">Real transformations from Ahmedabad pet parents. Professional grooming, spa treatments and breed-specific styling.</p>
           </div>
 
           <!-- Transformation stats -->
@@ -348,13 +375,13 @@ export async function renderLanding(container, params) {
               <div class="compare-slider" id="compare-slider">
                 <!-- After Container -->
                 <div class="after-img-container">
-                  <img src="/assets/after_grooming.png" alt="Groomed Maltese After" draggable="false">
+                  <img src="/assets/after_grooming.png" alt="Groomed Maltese After" draggable="false" loading="lazy">
                   <span class="label label-after">Groomed (After)</span>
                 </div>
                 
                 <!-- Before Container -->
                 <div class="before-img-container" id="before-container">
-                  <img src="/assets/before_grooming.png" alt="Shaggy Maltese Before" draggable="false">
+                  <img src="/assets/before_grooming.png" alt="Shaggy Maltese Before" draggable="false" loading="lazy">
                   <span class="label label-before">Matted (Before)</span>
                 </div>
                 
@@ -373,12 +400,12 @@ export async function renderLanding(container, params) {
       <!-- Featured Salons -->
       <section class="featured-salons-section" style="padding: var(--section-space) 0; margin-bottom: 0; width: 100%; max-width: none;">
         <div class="container">
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--space-8);">
-            <div>
-              <span class="section-label">⭐ Top Rated in Ahmedabad</span>
-              <h2 class="section-title" style="margin-bottom:0;">Featured Salons Nearby</h2>
+          <div style="text-align:center;margin-bottom:var(--space-10);">
+            <h2 class="section-title" style="margin-bottom:10px;">Featured Salons Nearby</h2>
+            <p class="section-subtitle">Top-rated pet grooming salons trusted by Ahmedabad pet parents.</p>
+            <div style="margin-top:var(--space-5);">
+              <a href="/discover" class="btn btn-outline" data-link>View All Salons <i data-lucide="arrow-right" style="width:14px;height:14px;margin-left:4px;"></i></a>
             </div>
-            <a href="/discover" class="btn btn-outline" data-link>View All <i data-lucide="arrow-right" style="width:14px;height:14px;margin-left:4px;"></i></a>
           </div>
           
           <div class="salons-grid stagger-children">
@@ -409,7 +436,69 @@ export async function renderLanding(container, params) {
         </div>
       </section>
 
-      <!-- Premium CTA Section — Two Column -->
+      <!-- FAQ Section -->
+      <section class="faq-section reveal">
+        <div class="container">
+          <div class="section-header" style="text-align:center;margin-bottom:var(--space-10);">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle" style="max-width:480px;margin:10px auto 0;">Everything you need to know about booking and grooming with Pawfect.</p>
+          </div>
+          <div class="faq-list" id="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How do I book a salon?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Browse our verified salons on the Discover page, select your preferred salon, choose a service package, and book directly from the salon's page. You'll receive a confirmation instantly.</div></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Can I cancel my appointment?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Yes, you can cancel or reschedule appointments up to 24 hours before the scheduled time from your Dashboard. Cancellations within 24 hours may be subject to salon-specific policies.</div></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Do salons provide home service?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Select partner salons on Pawfect offer doorstep grooming services across Ahmedabad. Look for the "Home Service" badge when browsing salons on the Discover page to filter for this option.</div></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How are salons verified?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Every salon on Pawfect undergoes a thorough verification process including license checks, groomer certifications, hygiene audits, and customer review verification before being listed on the platform.</div></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Which breeds are supported?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Pawfect supports all common dog and cat breeds — from Golden Retrievers and Labradors to Persian cats and Pomeranians. Our groomer network is trained for breed-specific styling and care.</div></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Can I book grooming for cats?
+                <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="faq-body"><div class="faq-body-inner">Absolutely! Many of our partner salons specialize in feline grooming. Look for the "Cat Friendly" tag when browsing the Discover page to find cat-specialist groomers near you.</div></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Premium CTA Section &mdash; Two Column -->
+
       <section class="premium-cta-section reveal">
         <div class="premium-cta-glow-1"></div>
         <div class="premium-cta-glow-2"></div>
@@ -456,6 +545,79 @@ export async function renderLanding(container, params) {
     // Count-up stats
     document.querySelectorAll('[data-count]').forEach(el => {
       ScrollReveal.animateCounter(el, parseFloat(el.dataset.count), 1800);
+    });
+
+    // ── FAQ Accordion ──────────────────────────────────────────
+    container.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        container.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ── Back To Top Button ─────────────────────────────────────
+    let btt = document.getElementById('pawfect-btt');
+    if (!btt) {
+      btt = document.createElement('button');
+      btt.id = 'pawfect-btt';
+      btt.className = 'back-to-top';
+      btt.setAttribute('aria-label', 'Back to top');
+      btt.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`;
+      document.body.appendChild(btt);
+      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+    const bttScroll = () => {
+      if (window.scrollY > 400) btt.classList.add('visible');
+      else btt.classList.remove('visible');
+    };
+    window.addEventListener('scroll', bttScroll, { passive: true });
+    window.addEventListener('route-changed', () => {
+      window.removeEventListener('scroll', bttScroll);
+      btt?.remove();
+    }, { once: true });
+
+    // ── Image Loading Fade ─────────────────────────────────────
+    container.querySelectorAll('img').forEach(img => {
+      if (img.complete) { img.classList.add('loaded'); }
+      else {
+        img.classList.add('loading');
+        img.addEventListener('load', () => {
+          img.classList.remove('loading');
+          img.classList.add('loaded');
+        }, { once: true });
+      }
+    });
+
+    // ── Stagger Children IntersectionObserver ──────────────────
+    const staggerEls = container.querySelectorAll('.stagger-children');
+    if (staggerEls.length) {
+      const staggerObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            Array.from(entry.target.children).forEach((child, i) => {
+              child.style.setProperty('--stagger-i', i);
+            });
+            entry.target.classList.add('in-view');
+            staggerObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      staggerEls.forEach(el => staggerObs.observe(el));
+    }
+
+    // ── 3D Tilt on Why-Cards ────────────────────────────────────
+    container.querySelectorAll('.why-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width  - 0.5;
+        const y = (e.clientY - rect.top)  / rect.height - 0.5;
+        card.style.transform = `translateY(-8px) scale(1.01) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
     });
 
     // ============================================

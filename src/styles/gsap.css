@@ -1,0 +1,67 @@
+/* ============================================================
+   PAWFECT — GSAP + ScrollTrigger Premium Animations
+   All scroll-driven, parallax, hero stagger, image reveal,
+   counter, stagger and section transition animations.
+   ============================================================ */
+
+/* ── Scroll Progress Bar ─────────────────────────────────── */
+#scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #E47D5D 0%, #C9A055 60%, #E47D5D 100%);
+  background-size: 200% 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 10001;
+  pointer-events: none;
+  border-radius: 0 2px 2px 0;
+  animation: shimmer-bar 3s linear infinite;
+}
+
+@keyframes shimmer-bar {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Disable conflicting CSS animations when GSAP is active ─ */
+.gsap-loaded .hero-tagline,
+.gsap-loaded .hero-title,
+.gsap-loaded .hero-subtitle,
+.gsap-loaded .hero-description,
+.gsap-loaded .hero-actions,
+.gsap-loaded .hero-trust {
+  animation: none !important;
+  /* GSAP sets opacity/transform directly — no CSS baseline needed */
+}
+
+.gsap-loaded .hero-image-container,
+.gsap-loaded .hero-right,
+.gsap-loaded .hero-image-wrap {
+  animation: none !important;
+}
+
+/* Why cards: GSAP handles entrance, CSS handles hover */
+.gsap-loaded .why-card {
+  animation: none !important;
+}
+
+/* FAQ items: GSAP handles entrance */
+.gsap-loaded .faq-item {
+  animation: none !important;
+}
+
+/* Floating cards: GSAP handles entrance, then CSS idle float takes over */
+.gsap-loaded .floating-card {
+  /* Keep card-float for idle movement after entrance */
+  animation-delay: 1.2s;
+}
+
+/* Section eyebrow / title animate classes: reset so GSAP can drive them */
+.gsap-loaded .section-title-animate,
+.gsap-loaded .section-subtitle-animate {
+  animation: none !important;
+  opacity: 1; /* GSAP will set to 0 before animating */
+}

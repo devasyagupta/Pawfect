@@ -39,13 +39,15 @@
 }
 
 .hero-title {
+  font-family: 'Baloo 2', 'Outfit', var(--font-display);
   font-size: var(--text-5xl);
-  font-weight: var(--weight-black);
+  font-weight: 800;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
   margin-bottom: var(--space-5);
 }
+
 
 .hero-subtitle {
   font-size: var(--text-lg);
@@ -187,11 +189,6 @@
 }
 
 /* --- Search Header Section --- */
-.search-header-section {
-  padding: var(--space-6) 0 var(--space-8) 0;
-  position: relative;
-  z-index: 20;
-}
 
 
 /* --- Section Layouts --- */
@@ -5424,3 +5421,166 @@
   }
 }
 
+/* ============================================================
+   MOBILE GUARDS — Targeted fixes that must live near component
+   definitions rather than in responsive.css overrides.
+   ============================================================ */
+
+/* ── Hero: clip floating cards that sit at negative % positions ── */
+@media (max-width: 768px) {
+  /* The hero-composition wrapper clips the floating cards */
+  .hero-composition {
+    overflow: visible;
+  }
+
+  /* Blob should not bleed outside hero */
+  .hero-blob {
+    overflow: hidden;
+  }
+
+  /* Ensure hero-image never exceeds its container */
+  .hero-image-container {
+    max-width: 100%;
+  }
+
+  .hero-image-container img {
+    max-width: 100%;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.12));
+  }
+}
+
+/* ── How It Works: prevent section overflow ── */
+@media (max-width: 768px) {
+  .how-it-works-section {
+    overflow: hidden;
+  }
+}
+
+/* ── Premium CTA: prevent overflow ── */
+@media (max-width: 768px) {
+  .premium-cta-section {
+    overflow: hidden;
+  }
+
+  .premium-cta-right {
+    overflow: hidden;
+  }
+}
+
+/* ── Discover Marketplace: responsive hero ── */
+@media (max-width: 768px) {
+  .dm-hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .dm-hero-text {
+    max-width: 100%;
+  }
+
+  .dm-hero-stats {
+    display: none; /* stats shown below on mobile to keep hero compact */
+  }
+}
+
+@media (max-width: 480px) {
+  .dm-hero {
+    padding: 32px 0 24px;
+  }
+}
+
+/* ── Stats section: mobile-specific overrides to resolve conflict ── */
+@media (max-width: 640px) {
+  /* Override the conflicting pages.css rule — keep 2-col not 1-col */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Dashboard: sidebar becomes a compact top nav on mobile ── */
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    position: static;
+    /* Convert sidebar nav items to horizontal scrollable row */
+  }
+
+  .dashboard-sidebar nav {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .dashboard-sidebar nav::-webkit-scrollbar { display: none; }
+
+  .dashboard-nav-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-height: 44px;
+  }
+}
+
+/* ── Salon Detail Gallery: mobile stack ── */
+@media (max-width: 640px) {
+  .salon-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 140px 140px;
+    border-radius: var(--radius-xl);
+  }
+
+  .gallery-main {
+    grid-row: span 1;
+  }
+}
+
+/* ── Packages: mobile single column ── */
+@media (max-width: 640px) {
+  .packages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Premium service card: mobile full-width ── */
+@media (max-width: 640px) {
+  .premium-service-card {
+    flex-direction: column;
+  }
+
+  .premium-service-card-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .premium-service-card-content {
+    width: 100%;
+    padding: var(--space-5);
+  }
+}
+
+/* ── Blog: responsive grid ── */
+@media (max-width: 768px) {
+  [class*="blog-grid"],
+  [class*="blog-listing"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Salon Dashboard: responsive ── */
+@media (max-width: 768px) {
+  .salon-dashboard-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .salon-dashboard-header {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}

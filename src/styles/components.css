@@ -1535,3 +1535,150 @@
   .contact-item { min-height: 68px; }
   .contact-modal-close { top: var(--space-3); right: var(--space-3); }
 }
+
+/* ============================================================
+   MOBILE COMPONENT FIXES
+   ============================================================ */
+
+/* ── Touch-action: prevent accidental scroll override on cards ── */
+@media (max-width: 768px) {
+  .salon-card,
+  .service-card,
+  .why-card,
+  .stat-card,
+  .package-card,
+  .testimonial-card,
+  .dashboard-stat-card,
+  .dashboard-stat-pill,
+  .dashboard-pet-card,
+  .dashboard-add-pet-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    /* Disable 3D hover transforms on touch — avoids sticky hover states */
+    transform: none !important;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+  }
+
+  /* Re-enable subtle press feedback */
+  .salon-card:active,
+  .why-card:active,
+  .service-card:active {
+    transform: scale(0.985) !important;
+    box-shadow: var(--shadow-warm) !important;
+  }
+
+  /* Ensure salon card image zoom still works */
+  .salon-card .salon-card-image img {
+    transition: transform 0.4s ease !important;
+  }
+  .salon-card:active .salon-card-image img {
+    transform: scale(1.03) !important;
+  }
+
+  /* Fav button: bigger tap target */
+  .salon-card-fav {
+    width: 40px;
+    height: 40px;
+    touch-action: manipulation;
+  }
+}
+
+/* ── Compare Slider: touch-friendly ── */
+@media (max-width: 768px) {
+  .compare-slider-wrapper {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .compare-slider {
+    /* Allow the custom JS drag handler to work without conflict */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Easier to grab handle on mobile */
+  .compare-slider .slider-handle {
+    width: 6px; /* slightly thicker */
+  }
+
+  .compare-slider .slider-button {
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 4px 16px rgba(228, 125, 93, 0.4), 0 2px 6px rgba(0,0,0,0.15);
+    border-width: 2.5px;
+  }
+
+  /* Labels: safe at 320px */
+  .compare-slider .label {
+    font-size: 9px;
+    padding: 5px 9px;
+    bottom: 10px;
+  }
+
+  .compare-slider .label-before { left: 10px; }
+  .compare-slider .label-after  { right: 10px; }
+}
+
+/* ── Mobile Menu: larger tap targets ── */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    /* Minimum 44×44 touch target */
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    touch-action: manipulation;
+  }
+
+  .mobile-link {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Active state feedback */
+  .mobile-link:active {
+    background-color: var(--coral-bg);
+    color: var(--coral);
+  }
+}
+
+/* ── Search bar: mobile input fix ── */
+@media (max-width: 768px) {
+  .search-item input,
+  .search-item select {
+    font-size: 16px; /* prevent iOS zoom */
+  }
+
+  .dm-search-field input {
+    font-size: 16px; /* prevent iOS zoom */
+    padding: 12px 0;
+  }
+}
+
+/* ── Stat cards: proper mobile sizing ── */
+@media (max-width: 768px) {
+  .stat-card {
+    border-radius: var(--radius-xl);
+    padding: var(--space-4) var(--space-4);
+  }
+
+  .stat-number {
+    font-size: var(--text-2xl);
+  }
+
+  .stat-label {
+    font-size: var(--text-xs);
+  }
+}
+
+/* ── Widget: mobile padding ── */
+@media (max-width: 768px) {
+  .widget {
+    padding: var(--space-5);
+    border-radius: var(--radius-xl);
+  }
+}

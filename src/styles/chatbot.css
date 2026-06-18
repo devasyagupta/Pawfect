@@ -1,0 +1,878 @@
+/* ============================================
+   PAWFECT — Floating 3D Chatbot Widget Styles
+   Namespaced under .pawfect-chatbot-* to avoid
+   conflicts with existing design-system styles.
+   ============================================ */
+
+/* ── Root Mount ─────────────────────────────── */
+#pawfect-chatbot-root {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none; /* children re-enable */
+}
+
+/* ── Avatar Container ───────────────────────── */
+.pawfect-avatar-wrap {
+  position: relative;
+  width: 100px;
+  height: 120px;
+  pointer-events: all;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pawfect-avatar-canvas {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+  /* Soft glow on the canvas itself */
+  filter: drop-shadow(0 0 12px rgba(228, 125, 93, 0.55))
+          drop-shadow(0 4px 20px rgba(228, 125, 93, 0.3));
+  transition: filter 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: filter, transform;
+}
+
+.pawfect-avatar-wrap:hover .pawfect-avatar-canvas {
+  filter: drop-shadow(0 0 20px rgba(228, 125, 93, 0.8))
+          drop-shadow(0 6px 28px rgba(228, 125, 93, 0.45));
+  transform: scale(1.06);
+}
+
+/* Glowing ring shadow beneath the avatar */
+.pawfect-avatar-ring {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    rgba(228, 125, 93, 0.55) 0%,
+    rgba(228, 125, 93, 0.20) 50%,
+    transparent 75%
+  );
+  filter: blur(4px);
+  animation: pawfect-ring-pulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pawfect-ring-pulse {
+  0%, 100% { transform: translateX(-50%) scaleX(1);   opacity: 0.7; }
+  50%       { transform: translateX(-50%) scaleX(0.85); opacity: 1;   }
+}
+
+/* Notification badge */
+.pawfect-avatar-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E47D5D, #D4613F);
+  border: 2.5px solid #FFF8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(228, 125, 93, 0.5);
+  animation: pawfect-badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  pointer-events: none;
+}
+
+@keyframes pawfect-badge-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+.pawfect-avatar-badge.hidden {
+  display: none;
+}
+
+/* Tooltip hint label — replaced by persistent speech bubble; keep for a11y fallback */
+.pawfect-avatar-label {
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(27, 42, 74, 0.85);
+  padding: 4px 10px;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;          /* always hidden — speech bubble replaces this */
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(6px);
+}
+
+.pawfect-avatar-wrap:hover .pawfect-avatar-label {
+  opacity: 0;          /* keep suppressed */
+}
+
+/* ── Speech Bubble ──────────────────────────── */
+@keyframes pawfect-bubble-fadein {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0);   }
+}
+
+@keyframes pawfect-bubble-float {
+  0%,100% { transform: translateX(-50%) translateY(0px);   }
+  50%      { transform: translateX(-50%) translateY(-4px);  }
+}
+
+.pawfect-speech-bubble {
+  position: absolute;
+  bottom: calc(100% + 18px);  /* sits above the avatar wrap + gap for the tail */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #E47D5D, #D4613F);
+  padding: 7px 16px;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow:
+    0 4px 16px rgba(228,125,93,0.45),
+    0 1px 4px rgba(0,0,0,0.12);
+  letter-spacing: 0.01em;
+  /* Animate in after 0.6s page load, then gentle float loop */
+  opacity: 0;
+  animation:
+    pawfect-bubble-fadein 0.5s cubic-bezier(0.22,1,0.36,1) 0.6s forwards,
+    pawfect-bubble-float  3s ease-in-out 1.2s infinite;
+  z-index: 10;
+}
+
+/* Downward triangle tail */
+.pawfect-speech-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: #D4613F;
+  border-bottom: 0;
+  margin-top: -1px;
+}
+
+/* Hide bubble when chat panel is open */
+.pawfect-chat-panel.open ~ .pawfect-speech-bubble,
+#pawfect-chatbot-root.chat-open .pawfect-speech-bubble {
+  opacity: 0 !important;
+  animation: none !important;
+  transition: opacity 0.2s ease;
+}
+
+/* ── Chat Panel ─────────────────────────────── */
+.pawfect-chat-panel {
+  position: fixed;
+  bottom: 160px;
+  right: 24px;
+  width: 380px;
+  height: 520px;
+  background: rgba(255, 252, 248, 0.97);
+  border-radius: 20px;
+  border: 1px solid rgba(228, 125, 93, 0.18);
+  box-shadow:
+    0 32px 80px rgba(27, 42, 74, 0.18),
+    0 8px 24px rgba(228, 125, 93, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: all;
+  z-index: 8999;
+  transform: translateY(24px) scale(0.97);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.4s;
+  will-change: transform, opacity;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.pawfect-chat-panel.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+  transition:
+    transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+/* ── Panel Header ───────────────────────────── */
+.pawfect-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #1B2A4A 0%, #0F1D36 100%);
+  border-radius: 20px 20px 0 0;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pawfect-chat-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 50%, rgba(228, 125, 93, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.pawfect-chat-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(228, 125, 93, 0.6);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #E47D5D, #C9A055);
+  font-size: 20px;
+  box-shadow: 0 0 0 3px rgba(228, 125, 93, 0.2);
+}
+
+.pawfect-chat-header-avatar canvas {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+}
+
+.pawfect-chat-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pawfect-chat-header-name {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pawfect-chat-header-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.pawfect-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.7);
+  animation: pawfect-status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pawfect-status-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.pawfect-chat-header-status span {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.pawfect-chat-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.pawfect-chat-close:hover {
+  background: rgba(228, 125, 93, 0.3);
+  border-color: rgba(228, 125, 93, 0.5);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* ── Message Thread ─────────────────────────── */
+.pawfect-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.pawfect-chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+.pawfect-chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.pawfect-chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(228, 125, 93, 0.25);
+  border-radius: 4px;
+}
+.pawfect-chat-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(228, 125, 93, 0.45);
+}
+
+/* Message row */
+.pawfect-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 92%;
+  animation: pawfect-msg-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pawfect-msg-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pawfect-msg.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.pawfect-msg.assistant {
+  align-self: flex-start;
+}
+
+/* Avatar micro icon */
+.pawfect-msg-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pawfect-msg.user .pawfect-msg-avatar {
+  background: linear-gradient(135deg, #E47D5D, #D4613F);
+}
+
+.pawfect-msg.assistant .pawfect-msg-avatar {
+  background: linear-gradient(135deg, #D4680A, #E8892B);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 8px rgba(212, 104, 10, 0.35);
+}
+
+/* Bubble */
+.pawfect-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.pawfect-msg.user .pawfect-bubble {
+  background: linear-gradient(135deg, #E47D5D, #D4613F);
+  color: #FFFFFF;
+  border-radius: 16px 16px 4px 16px;
+  box-shadow: 0 4px 16px rgba(228, 125, 93, 0.3);
+}
+
+.pawfect-msg.assistant .pawfect-bubble {
+  background: #FFFFFF;
+  color: #1B2A4A;
+  border: 1px solid rgba(228, 125, 93, 0.12);
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 2px 10px rgba(27, 42, 74, 0.06);
+}
+
+/* Timestamp */
+.pawfect-bubble-time {
+  font-size: 10px;
+  opacity: 0.55;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.pawfect-msg.user .pawfect-bubble-time {
+  text-align: right;
+  color: rgba(255,255,255,0.7);
+}
+.pawfect-msg.assistant .pawfect-bubble-time {
+  color: #9BAAB8;
+}
+
+/* Image preview in bubble */
+.pawfect-bubble-image {
+  max-width: 180px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── Typing Indicator ───────────────────────── */
+.pawfect-typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  animation: pawfect-msg-in 0.3s both;
+}
+
+.pawfect-typing-indicator .pawfect-msg-avatar {
+  background: linear-gradient(135deg, #D4680A, #E8892B);
+  font-size: 9px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(212, 104, 10, 0.35);
+}
+
+.pawfect-typing-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #FFFFFF;
+  border: 1px solid rgba(228, 125, 93, 0.12);
+  border-radius: 16px 16px 16px 4px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 10px rgba(27, 42, 74, 0.06);
+}
+
+.pawfect-typing-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E47D5D, #C9A055);
+  display: block;
+  animation: pawfect-dot-bounce 1.2s ease-in-out infinite;
+}
+
+.pawfect-typing-dots span:nth-child(1) { animation-delay: 0s; }
+.pawfect-typing-dots span:nth-child(2) { animation-delay: 0.18s; }
+.pawfect-typing-dots span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes pawfect-dot-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Welcome Banner ─────────────────────────── */
+.pawfect-welcome-banner {
+  text-align: center;
+  padding: 16px 12px 8px;
+  animation: pawfect-msg-in 0.4s both;
+}
+
+.pawfect-welcome-paw {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+  animation: pawfect-paw-wag 1.5s ease-in-out 0.4s both;
+}
+
+@keyframes pawfect-paw-wag {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-15deg); }
+  40%  { transform: rotate(15deg); }
+  60%  { transform: rotate(-10deg); }
+  80%  { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.pawfect-welcome-banner h4 {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1B2A4A;
+  margin: 0 0 4px;
+}
+
+.pawfect-welcome-banner p {
+  font-size: 12px;
+  color: #9BAAB8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Quick reply chips */
+.pawfect-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 8px;
+  justify-content: center;
+}
+
+.pawfect-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #E47D5D;
+  background: rgba(228, 125, 93, 0.08);
+  border: 1px solid rgba(228, 125, 93, 0.22);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pawfect-chip:hover {
+  background: #E47D5D;
+  color: #fff;
+  border-color: #E47D5D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(228, 125, 93, 0.25);
+}
+
+/* ── Disclaimer Bar ─────────────────────────── */
+.pawfect-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 16px;
+  background: rgba(201, 160, 85, 0.06);
+  border-top: 1px solid rgba(201, 160, 85, 0.12);
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #9BAAB8;
+  line-height: 1.4;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Input Area ─────────────────────────────── */
+.pawfect-chat-footer {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(228, 125, 93, 0.10);
+  background: rgba(255, 255, 255, 0.95);
+  flex-shrink: 0;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Image preview thumbnail */
+.pawfect-image-preview-wrap {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(228, 125, 93, 0.06);
+  border: 1px solid rgba(228, 125, 93, 0.15);
+  border-radius: 10px;
+}
+
+.pawfect-image-preview-wrap.visible {
+  display: flex;
+}
+
+.pawfect-preview-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(228, 125, 93, 0.2);
+}
+
+.pawfect-preview-label {
+  flex: 1;
+  font-size: 12px;
+  color: #6B7B8D;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pawfect-preview-remove {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(228, 125, 93, 0.15);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E47D5D;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.pawfect-preview-remove:hover {
+  background: #E47D5D;
+  color: #fff;
+}
+
+/* Input row */
+.pawfect-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.pawfect-input-field {
+  flex: 1;
+  background: #F8F4EF;
+  border: 1.5px solid rgba(228, 125, 93, 0.15);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: #1B2A4A;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  max-height: 100px;
+  overflow-y: auto;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pawfect-input-field::placeholder {
+  color: #B8C4CF;
+}
+
+.pawfect-input-field:focus {
+  border-color: rgba(228, 125, 93, 0.45);
+  box-shadow: 0 0 0 3px rgba(228, 125, 93, 0.08);
+  background: #fff;
+}
+
+/* Action buttons row */
+.pawfect-input-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.pawfect-upload-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(228, 125, 93, 0.08);
+  border: 1.5px solid rgba(228, 125, 93, 0.18);
+  color: #E47D5D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pawfect-upload-btn:hover {
+  background: rgba(228, 125, 93, 0.15);
+  border-color: rgba(228, 125, 93, 0.4);
+  transform: scale(1.05);
+}
+
+.pawfect-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E47D5D, #D4613F);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px rgba(228, 125, 93, 0.4);
+  flex-shrink: 0;
+}
+
+.pawfect-send-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(228, 125, 93, 0.5);
+}
+
+.pawfect-send-btn:active {
+  transform: scale(0.95);
+}
+
+.pawfect-send-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Hidden file input */
+#pawfect-file-input {
+  display: none;
+}
+
+/* ── Mobile Responsive ──────────────────────── */
+@media (max-width: 600px) {
+  /* Avatar: stay bottom-right but smaller */
+  #pawfect-chatbot-root {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .pawfect-avatar-wrap {
+    width: 78px;
+    height: 94px;
+  }
+
+  .pawfect-avatar-canvas {
+    width: 78px;
+    height: 78px;
+  }
+
+  /* Speech bubble: compact on mobile */
+  .pawfect-speech-bubble {
+    font-size: 10px;
+    padding: 5px 11px;
+    white-space: nowrap;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Full-screen chat panel */
+  .pawfect-chat-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;  /* Dynamic viewport height — handles mobile browser chrome */
+    border-radius: 0;
+    border: none;
+    /* Slide up from bottom */
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .pawfect-chat-panel.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Header: account for status bar on notched iPhones */
+  .pawfect-chat-header {
+    border-radius: 0;
+    padding-top: max(16px, env(safe-area-inset-top, 16px));
+    flex-shrink: 0;
+  }
+
+  /* Footer: stay above keyboard and home indicator */
+  .pawfect-chat-footer {
+    border-radius: 0;
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  /* Input: bigger tap target, prevent iOS zoom */
+  .pawfect-input-field {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+
+  /* Send / upload buttons: 44px minimum touch target */
+  .pawfect-send-btn,
+  .pawfect-upload-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  /* Quick reply chips: horizontal scroll, no wrap */
+  .pawfect-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .pawfect-chips::-webkit-scrollbar { display: none; }
+
+  .pawfect-chip {
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 6px 14px;
+    min-height: 36px;
+    white-space: nowrap;
+  }
+
+  /* Messages area: grow and scroll */
+  .pawfect-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Back-to-top: shifted when chatbot is visible */
+@media (max-width: 600px) {
+  .back-to-top {
+    bottom: 110px;
+    left: 16px;
+  }
+}

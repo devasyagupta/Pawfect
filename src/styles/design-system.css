@@ -27,6 +27,9 @@ body {
   position: relative;
 }
 
+
+
+
 /* Ambient glow (warm coral/gold whisper) */
 body::before {
   content: '';
@@ -278,6 +281,19 @@ body::after {
   padding: 0 var(--space-8);
 }
 
+/* Mobile container — prevent sidescroll */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
 /* --- Base Styling --- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
@@ -386,6 +402,13 @@ button {
   font-size: var(--text-sm);
   transition: all var(--transition-smooth);
   outline: none;
+}
+
+/* Prevent iOS Safari auto-zoom on input focus — must be ≥16px */
+@media (max-width: 768px) {
+  .input {
+    font-size: 16px;
+  }
 }
 
 .input:focus {
